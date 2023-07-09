@@ -2,6 +2,7 @@ package kr.fan.problem1;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import kr.fan.problem1.board.Board;
 import kr.fan.problem1.category.Category;
 import kr.fan.problem1.category.CategoryRelation;
@@ -23,7 +24,7 @@ public class MemoryRepository {
     private final Map<Integer, Board> boardMap = new HashMap<>();
     private final Map<Integer, CategoryRelation> categoryRelationMap = new HashMap<>();
     private final Map<Integer, CategoryToBoardRelation> categoryToBoardRelationMap = new HashMap<>();
-    private final static ObjectMapper objectMapper = new ObjectMapper();
+    private final static ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
     /**
      * Category 저장
@@ -66,12 +67,9 @@ public class MemoryRepository {
      * Board 저장
      * @param board - board
      */
-    public void saveBoard(Board board, Category category){
+    public void saveBoard(Board board){
         if(boardMap.containsKey(board.getId())) throw new RuntimeException("이미 존재하는 book 입니다. 다른 book 입력해주세요");
-        if(!categoryMap.containsKey(category.getId())) throw new RuntimeException("존재하는 않는 category 입니다. 다른 category 입력해주세요");
         boardMap.put(board.getId(), board);
-        CategoryRelation categoryRelation = categoryRelationMap.get(category.getId());
-        categoryRelation.addChildId(board.getId());
     }
 
     /**
@@ -156,7 +154,7 @@ public class MemoryRepository {
      * @param id - categoryId
      * @return category 계층 관계 json
      */
-    public String searchCategoryToId(Integer id) throws JsonProcessingException {
+    public String searchCategoryToId(Integer id){
         return searchCategory(categoryMap.get(id));
     }
 
