@@ -6,16 +6,16 @@ import kr.fan.problem1.category.Category;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Category 와 Board 의 관계를 표현하기 위한 Class
  */
 public class CategoryLeafNode implements Node{
-    @JsonProperty("categoryId")
     private final Integer id;
-    @JsonProperty("categoryName")
     private final String name;
-    private final Set<Board> boards = new HashSet<>();
+    private final SortedSet<Board> boards = new TreeSet<>();
 
     public Integer getId() {
         return id;

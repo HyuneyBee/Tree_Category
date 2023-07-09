@@ -5,10 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
 * Board Entity Class
 */
-public class Board {
-    @JsonProperty("boardId")
+public class Board implements Comparable<Board>{
     private final Integer id;
-    @JsonProperty("boardName")
     private final String name;
 
     public Board(Integer id, String name) {
@@ -22,5 +20,10 @@ public class Board {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int compareTo(Board o) {
+        return Integer.compare(this.id, o.getId());
     }
 }
